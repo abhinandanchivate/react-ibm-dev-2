@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { registerUser } from "../services/auth.service";
 const registerState = {
   name: "abhi",
   email: "",
@@ -26,6 +27,7 @@ const Register = () => {
     // we want to update the state variable
     // to update the state : we ahve to use the function setForm
     const { name, value } = e.target;
+
     // name and value ==> input tag ==> e.target(input tag)
     // it will consider from e.target :
 
@@ -38,7 +40,16 @@ const Register = () => {
     // ... will copy all the key value pairs from form(state) to the new json object i.e.{...form}
   };
   // onSubmit
-  const onSubmit = (e) => {};
+  const onSubmit = (e) => {
+    e.preventDefault();
+    console.log("Form Submitted");
+    console.log(form);
+    registerUser(form) // state object
+      // state object i.e. form will hold the data from the form(input data)
+
+      .then((res) => console.log(res))
+      .catch((err) => {});
+  };
 
   return (
     <>
