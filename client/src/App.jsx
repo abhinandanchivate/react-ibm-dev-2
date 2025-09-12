@@ -5,9 +5,14 @@ import Footer from "./core/components/layouts/Footer";
 import RootRouter from "./RootRouter";
 
 function App() {
+  const appName = "IBM-Connector";
+  const user = { name: "Abhi", email: "abhi@gmail.com" };
+  const handleLogout = () => {
+    alert("Logout clicked");
+  };
   return (
     <>
-      <Header />
+      <Header appName={appName} user={user} logOut={handleLogout} />
       <RootRouter />
       <Footer />
     </>

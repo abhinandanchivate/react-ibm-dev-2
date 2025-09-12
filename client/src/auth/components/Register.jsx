@@ -10,6 +10,7 @@ const Register = () => {
   // we will decalre the state
   // we have to use a hook called useState
   const [form, setForm] = useState(registerState);
+  const [errors, setErrors] = useState({});
   // destructuring of the json object
   // form.name , form.email , form.password , form.password2
   // name , email , password , password2
@@ -44,11 +45,27 @@ const Register = () => {
     e.preventDefault();
     console.log("Form Submitted");
     console.log(form);
-    registerUser(form) // state object
-      // state object i.e. form will hold the data from the form(input data)
+    if (password !== password2) {
+      setErrors({ password: "Password and Confirm Password should be same" });
+    } else
+      registerUser(form) // state object
+        // state object i.e. form will hold the data from the form(input data)
 
-      .then((res) => console.log(res))
-      .catch((err) => {});
+        .then((res) => console.log(res))
+        .catch((err) => {
+          // let e = {};
+          // console.log(err.data);
+          const errorObj = err.data.reduce((acc, error) => {
+            acc[error.path] = error.msg;
+            //acc: {name: 'Name is required', email: 'Email is required', password: 'Password is required', password2: 'Password2 is required'}
+            return acc;
+          }, {});
+
+          setErrors(errorObj);
+          // console.log(errorObj);
+          // err.data.forEach((error) => (e[error.path] = error.msg));
+          // console.log(e);
+        });
   };
 
   return (
@@ -67,8 +84,10 @@ const Register = () => {
               name="name"
               value={name}
               onChange={onChange}
-              required
             />
+            {errors.name && (
+              <div class="d-block invalid-feedback">{errors.name}</div>
+            )}
           </div>
           <div class="form-group">
             <input
@@ -78,6 +97,7 @@ const Register = () => {
               value={email}
               onChange={onChange}
             />
+            {errors.email && <div class="invalid-feedback">{errors.email}</div>}
             <small class="form-text">
               This site uses Gravatar so if you want a profile image, use a
               Gravatar email
@@ -92,6 +112,9 @@ const Register = () => {
               value={password}
               onChange={onChange}
             />
+            {errors.password && (
+              <div class="invalid-feedback">{errors.password}</div>
+            )}
           </div>
           <div class="form-group">
             <input
@@ -102,6 +125,9 @@ const Register = () => {
               value={password2}
               onChange={onChange}
             />
+            {errors.password && (
+              <div class="d-block invalid-feedback">{errors.password}</div>
+            )}
           </div>
           <input type="submit" class="btn btn-primary" value="Register" />
         </form>

@@ -1,13 +1,17 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Test from "./Test";
 
-const Header = () => {
+const Header = ({ user: { name }, logOut, appName = "DevConnector" }) => {
+  // props : share the properties i.e. fields / value object
+  // and we can share the functions as well.
+
   return (
     <>
       <nav className="navbar bg-dark">
         <h1>
           <a href="index.html">
-            <i className="fas fa-code"></i> DevConnector
+            <i className="fas fa-code"></i> {appName} {name}
           </a>
         </h1>
         <ul>
@@ -20,8 +24,10 @@ const Header = () => {
           <li>
             <Link to="/auth/login">Login</Link>
           </li>
+          <button className="btn btn-primary" onClick={logOut} />
         </ul>
       </nav>
+      <Test />
     </>
   );
 };
