@@ -1,5 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { registerUser } from "../services/auth.service";
+import { registerUserAction } from "../redux/action/registerAction";
 const registerState = {
   name: "abhi",
   email: "",
@@ -7,10 +10,26 @@ const registerState = {
   password2: "",
 };
 const Register = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate(); // hook used for runtime navigation
+
   // we will decalre the state
   // we have to use a hook called useState
   const [form, setForm] = useState(registerState);
   const [errors, setErrors] = useState({});
+  const { error } = useSelector((state) => state.auth);
+  // hook called useEffect : to perform side effects in functional components i.e. loading , during the component life cycle.
+  useEffect(() => {
+    setErrors(error || {});
+  }, [error]);
+  // useEffect will have 3 forms :
+  /**
+   *
+useEffect(fn, deps) runs fn after React paints to the screen, and again whenever any value in deps changes.
+
+Here, deps is [error], so the effect runs on mount and whenever the Redux error value changes
+   */
+
   // destructuring of the json object
   // form.name , form.email , form.password , form.password2
   // name , email , password , password2
@@ -47,25 +66,28 @@ const Register = () => {
     console.log(form);
     if (password !== password2) {
       setErrors({ password: "Password and Confirm Password should be same" });
-    } else
-      registerUser(form) // state object
-        // state object i.e. form will hold the data from the form(input data)
+    } else {
+      // call the action
+      dispatch(registerUserAction(form));
+    }
+    // registerUser(form) // state object
+    //   // state object i.e. form will hold the data from the form(input data)
 
-        .then((res) => console.log(res))
-        .catch((err) => {
-          // let e = {};
-          // console.log(err.data);
-          const errorObj = err.data.reduce((acc, error) => {
-            acc[error.path] = error.msg;
-            //acc: {name: 'Name is required', email: 'Email is required', password: 'Password is required', password2: 'Password2 is required'}
-            return acc;
-          }, {});
+    //   .then((res) => console.log(res))
+    //   .catch((err) => {
+    //     // let e = {};
+    //     // console.log(err.data);
+    //     const errorObj = err.data.reduce((acc, error) => {
+    //       acc[error.path] = error.msg;
+    //       //acc: {name: 'Name is required', email: 'Email is required', password: 'Password is required', password2: 'Password2 is required'}
+    //       return acc;
+    //     }, {});
 
-          setErrors(errorObj);
-          // console.log(errorObj);
-          // err.data.forEach((error) => (e[error.path] = error.msg));
-          // console.log(e);
-        });
+    //     setErrors(errorObj);
+    //     // console.log(errorObj);
+    //     // err.data.forEach((error) => (e[error.path] = error.msg));
+    //     // console.log(e);
+    //   });
   };
 
   return (
