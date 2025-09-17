@@ -17,11 +17,18 @@ const Register = () => {
   // we have to use a hook called useState
   const [form, setForm] = useState(registerState);
   const [errors, setErrors] = useState({});
-  const { error } = useSelector((state) => state.auth);
+  const { error, isAuthenticated, status } = useSelector((state) => state.auth);
   // hook called useEffect : to perform side effects in functional components i.e. loading , during the component life cycle.
   useEffect(() => {
+    // if (isAuthenticated && status === "success") {
+    //   navigate("/dashboard");
+    // }
     setErrors(error || {});
-  }, [error]);
+  }, [
+    error,
+    //navigate, isAuthenticated, status
+  ]); //[] the seq of the dependencies
+  // not a matter.
   // useEffect will have 3 forms :
   /**
    *

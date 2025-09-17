@@ -21,3 +21,8 @@ export const registerUserAction = createAsyncThunk(
 // action types : auth/registerUser/pending
 // action types : auth/registerUser/fulfilled
 // action types : auth/registerUser/rejected
+
+// after successful registration redirect it to dashboard
+
+// 1. we should use useeffect ==> inside the component.
+// 2. we should use useNavigate ==> to redirect the user to the dashboard but decimsion should be taken inside the registerAction

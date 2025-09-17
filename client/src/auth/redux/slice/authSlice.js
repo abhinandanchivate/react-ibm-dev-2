@@ -9,6 +9,7 @@ const authState = {
   user: null,
   token: localStorage.getItem("token"),
   error: null,
+  status: "",
 };
 const authSlice = createSlice({
   name: "auth",
@@ -29,6 +30,7 @@ const authSlice = createSlice({
         console.log(action.payload.data.token);
         localStorage.setItem("token", action.payload.data.token);
         state.token = action.payload.data.token;
+        state.status = "success";
         // we need to access the payload ==> contains the jwt.
       }) // success
 
@@ -43,6 +45,7 @@ const authSlice = createSlice({
         state.loading = false;
         state.isAuthenticated = false;
         state.token = null;
+        state.status = "failure";
       }); // failure
   },
   //   extraReducers: {

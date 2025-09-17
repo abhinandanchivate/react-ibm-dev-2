@@ -14,6 +14,7 @@ function App() {
     <>
       <Header appName={appName} user={user} logOut={handleLogout} />
       <RootRouter />
+
       <Footer />
     </>
   );
