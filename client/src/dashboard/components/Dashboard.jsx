@@ -53,6 +53,134 @@ const Dashboard = () => {
     );
   }
   // 4. success there we have a user profile.
+  if (status === "success" && profile) {
+    const {
+      company,
+      website,
+      location,
+      status: jobStatus,
+      skills,
+      githubusername,
+      bio,
+      social,
+    } = profile;
+
+    return (
+      <section className="container">
+        <h2 className="my-2">Dashboard</h2>
+
+        <div className="card card-body mb-3">
+          <h3>Profile Details</h3>
+          <ul className="list-group">
+            {company && (
+              <li className="list-group-item">
+                <strong>Company:</strong> {company}
+              </li>
+            )}
+            {website && (
+              <li className="list-group-item">
+                <strong>Website:</strong>{" "}
+                <a href={website} target="_blank" rel="noreferrer">
+                  {website}
+                </a>
+              </li>
+            )}
+            {location && (
+              <li className="list-group-item">
+                <strong>Location:</strong> {location}
+              </li>
+            )}
+            {jobStatus && (
+              <li className="list-group-item">
+                <strong>Status:</strong> {jobStatus}
+              </li>
+            )}
+            {skills && (
+              <li className="list-group-item">
+                <strong>Skills:</strong>{" "}
+                {Array.isArray(skills) ? skills.join(", ") : skills}
+              </li>
+            )}
+            {githubusername && (
+              <li className="list-group-item">
+                <strong>GitHub:</strong>{" "}
+                <a
+                  href={`https://github.com/${githubusername}`}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {githubusername}
+                </a>
+              </li>
+            )}
+            {bio && (
+              <li className="list-group-item">
+                <strong>Bio:</strong> {bio}
+              </li>
+            )}
+            {social && (
+              <li className="list-group-item">
+                <strong>Social:</strong>
+                <ul>
+                  {social.twitter && (
+                    <li>
+                      <a href={social.twitter} target="_blank" rel="noreferrer">
+                        Twitter
+                      </a>
+                    </li>
+                  )}
+                  {social.facebook && (
+                    <li>
+                      <a
+                        href={social.facebook}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        Facebook
+                      </a>
+                    </li>
+                  )}
+                  {social.linkedin && (
+                    <li>
+                      <a
+                        href={social.linkedin}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        LinkedIn
+                      </a>
+                    </li>
+                  )}
+                  {social.youtube && (
+                    <li>
+                      <a href={social.youtube} target="_blank" rel="noreferrer">
+                        YouTube
+                      </a>
+                    </li>
+                  )}
+                  {social.instagram && (
+                    <li>
+                      <a
+                        href={social.instagram}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        Instagram
+                      </a>
+                    </li>
+                  )}
+                </ul>
+              </li>
+            )}
+          </ul>
+        </div>
+
+        <Link to="/profile/edit-profile" className="btn btn-primary">
+          Edit Profile
+        </Link>
+      </section>
+    );
+  }
   // 5. failure : rest call failures.
 
   return <>Dashboard</>;

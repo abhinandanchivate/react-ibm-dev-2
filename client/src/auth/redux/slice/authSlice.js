@@ -14,7 +14,20 @@ const authState = {
 const authSlice = createSlice({
   name: "auth",
   initialState: authState,
-  reducers: {}, // it will hold only synchronous stuff
+  reducers: {
+    logout: (state) => {
+      localStorage.removeItem("token");
+      console.log("inside the slice");
+      return {
+        isAuthenticated: false,
+        loading: false,
+        user: null,
+        token: null, // ensure null, not value from localStorage
+        error: null,
+        status: "logged_out",
+      };
+    },
+  }, // it will hold only synchronous stuff
   extraReducers: (builder) => {
     builder // register : one of the case.
 
@@ -52,6 +65,7 @@ const authSlice = createSlice({
   //     // we will include register
   //   }, // it will hold async stuff like thunk actions rest calls. // register
 });
+export const { logout } = authSlice.actions;
 export default authSlice.reducer;
 // createSlice:
 // name, initialState, reducers

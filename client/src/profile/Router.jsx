@@ -6,6 +6,7 @@ const Router = () => {
   return (
     <Routes>
       <Route path="create-profile" element={<CreateProfile />}></Route>
+      <Route path="edit-profile" element={<CreateProfile />}></Route>
     </Routes>
   );
 };

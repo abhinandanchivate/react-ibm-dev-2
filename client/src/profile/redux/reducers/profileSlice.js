@@ -25,7 +25,7 @@ const profileSlice = createSlice({
       })
       .addCase(createOrUpdateProfileAction.fulfilled, (state, action) => {
         state.loading = false;
-        state.profile = action.payload;
+        state.profile = action.payload.data;
         state.status = "success";
         state.error = null;
       })
@@ -43,7 +43,7 @@ const profileSlice = createSlice({
       .addCase(getCurrentProfileAction.fulfilled, (state, action) => {
         state.loading = false;
         state.status = "empty";
-        state.profile = action.payload;
+        state.profile = action.payload.data;
       })
       .addCase(getCurrentProfileAction.rejected, (state, action) => {
         // we will come across two sitauations
